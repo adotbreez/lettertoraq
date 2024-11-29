@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Protected</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'EB Garamond', serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        #container {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #error {
+            color: red;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        /* Snowflake styles */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            z-index: 9999;
+            user-select: none;
+            pointer-events: none;
+            color: #fff;
+            font-size: 1em;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2 style="font-family: 'Great Vibes', cursive; font-size: 48px;">Welcome</h2>
+        <p>Please enter the password to continue</p>
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="checkPassword()">Submit</button>
+        <p id="error"></p>
+    </div>
+
+    <!-- Snowflakes -->
+    <div id="snowflakes"></div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password.toLowerCase() === 'sanluisobispo') { // Make it case-insensitive
+                document.getElementById('error').innerText = '';
+                setTimeout(() => {
+                    window.location.href = 'letter.html';
+                }, 1000);
+            } else {
+                document.getElementById('error').innerText = 'First trip hint.';
+            }
+        }
+
+        // Snowflake effect
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const snowflakeEmoji = '❄';
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.animationDuration = 5 + Math.random() * 5 + 's'; // between 5 - 10 seconds
+            snowflake.style.fontSize = 10 + Math.random() * 20 + 'px'; // between 10px - 30px
+            snowflake.innerText = snowflakeEmoji;
+            snowflakesContainer.appendChild(snowflake);
+
+            // Remove snowflake after it falls
+            setTimeout(() => {
+                snowflake.remove();
+            }, parseFloat(snowflake.style.animationDuration) * 1000);
+        }
+
+        setInterval(createSnowflake, 200);
+    </script>
+</body>
+</html>
