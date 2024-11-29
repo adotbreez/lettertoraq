@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('your-background-image.jpg'); /* Replace with the URL or path to your background image */
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'EB Garamond', serif;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+        #overlay {
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #letter {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 800px;
+            margin: auto;
+            font-size: 20px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        /* Blinking cursor */
+        #cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: #fff;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to {
+                background-color: transparent;
+            }
+            50% {
+                background-color: #fff;
+            }
+        }
+        /* Snowflake styles */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            z-index: 9999;
+            user-select: none;
+            pointer-events: none;
+            color: #fff;
+            font-size: 1em;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        /* Optional: Customize scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <div id="letter"></div><span id="cursor"></span>
+    </div>
+
+    <!-- Snowflakes -->
+    <div id="snowflakes"></div>
+
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="your-music-file.mp3" type="audio/mpeg">
+        <!-- Provide music file in MP3 format -->
+    </audio>
+    <button onclick="toggleMusic()" style="position: fixed; top: 20px; right: 20px; z-index: 10000; padding: 10px; background: rgba(255,255,255,0.5); border: none; border-radius: 5px; cursor: pointer;">Pause Music</button>
+
+    <script>
+        const letterContent = `dear raquel,
+thank you. i believe that's the first thing that you deserve to hear from me, you've been nothing short of a blessing to my life.
+from day one, i think that there was always this weird force drawing me toward you, despite my efforts to try and pull away. 
+i've told you before, but i didn't want to become another story told. regardless, i had begun to fall in love with you, and for
+reasons that i couldn't begin to list. but i will try.
+the purity of your heart is, with no doubt, one of the most attractive things about you. it's one thing to be a sweetheart to me,
+but seeing you just generally being kind to all those around you/us makes me head-over-heels. i can be weak in front of you and to
+you without a worry that i'm at risk of being taken advantage of. i really really appreciate that, i'm a very emotional person and
+it's difficult to hold it in, you've always made me more than comfortable enough to express it. 
+secondly, your intelligence, and your general passion/goals. i can't tell you about the butterflies that suffocated my heart when
+i read the sonnet you wrote for me. even generally when i read anything that you write (or especially if i hear you read it)
+there's this profound sense of admiration that just makes me melt in the thought of having the privilege of loving you. you genuinely
+inspire me, though, i mean i sort of copied your career goal of becoming a professor, and i think i always try to be my best self
+thanks to you just being yourself. you being amazing makes me want to be amazing.
+i think that you're very beautiful. honestly, though, i don't think that words can accurately describe the visual masterpiece that
+you exist as. maybe i shall compare thee to a summer's day. you remind me of when dante alighieri described a woman whomst he met
+(Beatrice) as a new chapter in his life. in the book which is my memory, on the first page, the chapter that i met you, appear the 
+words "here come a new life." i think all of the imperfection in the world exists solely due to the universe utilizing all of 
+its resources striving to create you as the embodiment of perfection. i want you, and i'm greedy. i want all of you until i'm 
+full of you. every inch of you. i want your lips against mine and to feel the heat of your body against my skin. i want to breathe
+you in and never exhale again. i need to be buried in you and let our roots spread for eternity until our love outlives us. 
+more or less.
+again, i really appreciate you raquel; the things you do and the person that you are. i adore you, genuinely. all of the time 
+we've spent, the memories we've made, the places we've gone. it all lives very deeply in my heart. i still have a very very big 
+crush on you and i hope our relationship can continue to develop and grow. the greatest gift in the world would be the privilege
+to call you mine. here's to our first christmas that we're sharing together, and hopefully we can share many more.
+
+thank you,
+ayden`;
+        let index = 0;
+        const speed = 50; // Adjust typing speed here
+        const letterElement = document.getElementById('letter');
+
+        function typeLetter() {
+            if (index < letterContent.length) {
+                const currentChar = letterContent.charAt(index);
+
+                if (currentChar === '\n') {
+                    letterElement.innerHTML += '<br>';
+                } else {
+                    letterElement.innerHTML += currentChar;
+                }
+                index++;
+                setTimeout(typeLetter, speed);
+            } else {
+                document.getElementById('cursor').style.display = 'none';
+            }
+        }
+
+        window.onload = () => {
+            typeLetter();
+            // Play background music
+            document.getElementById('background-music').play();
+        };
+
+        function toggleMusic() {
+            const music = document.getElementById('background-music');
+            const button = event.target;
+            if (music.paused) {
+                music.play();
+                button.textContent = 'Pause Music';
+            } else {
+                music.pause();
+                button.textContent = 'Play Music';
+            }
+        }
+
+        // Snowflake effect
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const snowflakeEmoji = '❄';
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
+            snowflake.style.fontSize = 10 + Math.random() * 20 + 'px';
+            snowflake.innerText = snowflakeEmoji;
+            snowflakesContainer.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, parseFloat(snowflake.style.animationDuration) * 1000);
+        }
+
+        setInterval(createSnowflake, 200);
+    </script>
+</body>
+</html>
